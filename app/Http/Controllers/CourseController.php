@@ -2,54 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Courses\CourseRequest;
 use App\Models\Course;
+use App\Services\CourseService;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(protected CourseService $service)
+    {
+    }
     public function index()
     {
-        //
+        $users = $this->service->findAll();
+        return response()->json($users, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(CourseRequest $request)
     {
-        //
+        $course = $this->add($request->all());
+
+        return response()->json($course, 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Course $course)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Course $course)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, Course $course)
     {
         //
