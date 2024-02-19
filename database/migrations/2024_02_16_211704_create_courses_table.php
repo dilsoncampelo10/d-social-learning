@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            $table->string('title', 100);
+            $table->text('description');
+            $table->string('certificate');
+            $table->integer('workload');
+            $table->string('cover')->default('cover.jpg');
+            $table->enum('category', []);
+            $table->decimal('price', 7, 2)->default(0);
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }
