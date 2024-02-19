@@ -3,23 +3,36 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Users\LoginRequest;
+use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): Response
+    public function __construct(protected UserService $service)
     {
-        $request->authenticate();
+    }
 
-        $request->session()->regenerate();
+    public function store(LoginRequest $request)
+    {
+        $array = $this->service->login($request->all());
 
-        return response()->noContent();
+        if (array_key_exists('errorMessage', $array)) {
+            return response()->json(['message' => $array['errorMessage']], 403);
+        }
+
+
+        return response()->json([
+            'user' => $array['user'],
+            'token' => $array['token']
+        ], 201);
     }
 
     /**
