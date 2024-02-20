@@ -3,63 +3,48 @@
 namespace App\Http\Controllers;
 
 use App\Models\Module;
+use App\Services\ModuleService;
 use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(protected ModuleService $service)
+    {
+    }
     public function index()
     {
-        //
+        $modules = $this->service->findAll();
+        return response()->json($modules, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $module = $this->add($request->all());
+
+        return response()->json($module, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Module $module)
+
+    public function show(int | string $id)
     {
-        //
+        $module = $this->service->findById($id);
+
+        return response()->json($module, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Module $module)
+
+    public function update(Request $request, int | string $id)
     {
-        //
+        $module = $this->service->update($request->all(), $id);
+
+        return response()->json($module, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Module $module)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Module $module)
+    public function destroy(int | string $id)
     {
-        //
+        $module = $this->service->delete($id);
+
+        return response()->json($module, 200);
     }
 }
