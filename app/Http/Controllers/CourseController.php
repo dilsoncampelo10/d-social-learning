@@ -25,27 +25,29 @@ class CourseController extends Controller
         return response()->json($course, 201);
     }
 
-    public function show(Course $course)
+    public function show(int | string $id)
     {
-        //
-    }
+        $course = $this->service->findById($id);
 
-    public function edit(Course $course)
-    {
-        //
+        return response()->json($course, 200);
     }
 
 
-    public function update(Request $request, Course $course)
+
+    public function update(Request $request, int | string $id)
     {
-        //
+        $course = $this->service->update($request->all(), $id);
+
+        return response()->json($course, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Course $course)
+    public function destroy(int | string $id)
     {
-        //
+        $course = $this->service->delete($id);
+
+        return response()->json($course, 200);
     }
 }
