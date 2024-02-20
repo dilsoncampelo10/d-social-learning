@@ -3,47 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct(protected CategoryService $service)
+    {
+    }
+
     public function index()
     {
-        //
+        $categories = $this->service->findAll();
+        return response()->json($categories, 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $category = $this->add($request->all());
+
+        return response()->json($category, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
+    public function show(int | string $id)
     {
-        //
+        $category = $this->service->findById($id);
+
+        return response()->json($category, 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, int | string $id)
     {
-        //
+        $category = $this->service->update($request->all(), $id);
+
+        return response()->json($category, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Category $category)
+    public function destroy(int | string $id)
     {
-        //
+        $category = $this->service->delete($id);
+
+        return response()->json($category, 200);
     }
 }

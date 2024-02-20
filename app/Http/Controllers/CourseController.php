@@ -14,8 +14,8 @@ class CourseController extends Controller
     }
     public function index()
     {
-        $users = $this->service->findAll();
-        return response()->json($users, 200);
+        $courses = $this->service->findAll();
+        return response()->json($courses, 200);
     }
 
     public function store(CourseRequest $request)
