@@ -15,31 +15,31 @@ class CategoryService
 
     public function findById(int | string $id): Category
     {
-        $course = Category::findOrFail($id);
+        $categories = Category::findOrFail($id);
 
-        return $course;
+        return $categories;
     }
 
     public function add(array $data): Category
     {
-        $course = Category::create($data);
+        $categories = Category::create($data);
 
-        return $course;
+        return $categories;
     }
 
     public function update(array $data, int | string $id): Category
     {
-        $course = $this->findById($id);
+        $categories = $this->findById($id);
 
-        $course->update($data);
+        $categories->update($data);
 
-        return $course;
+        return $categories;
     }
 
     public function delete(int | string $id): void
     {
-        $course = $this->findById($id);
+        $categories = $this->findById($id);
 
-        $course->delete();
+        $categories->delete();
     }
 }

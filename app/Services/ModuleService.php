@@ -14,31 +14,31 @@ class ModuleService
 
     public function findById(int | string $id): Module
     {
-        $course = Module::findOrFail($id);
+        $modules = Module::findOrFail($id);
 
-        return $course;
+        return $modules;
     }
 
     public function add(array $data): Module
     {
-        $course = Module::create($data);
+        $modules = Module::create($data);
 
-        return $course;
+        return $modules;
     }
 
     public function update(array $data, int | string $id): Module
     {
-        $course = $this->findById($id);
+        $modules = $this->findById($id);
 
-        $course->update($data);
+        $modules->update($data);
 
-        return $course;
+        return $modules;
     }
 
     public function delete(int | string $id): void
     {
-        $course = $this->findById($id);
+        $modules = $this->findById($id);
 
-        $course->delete();
+        $modules->delete();
     }
 }
