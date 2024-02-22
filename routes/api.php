@@ -3,26 +3,19 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CourseController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-
-   
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('courses', CourseController::class);
+    Route::apiResource('modules', ModuleController::class);
+    Route::apiResource('units', UnitController::class);
+    Route::apiResource('categories', CourseController::class);
+    Route::apiResource('participate', CourseController::class);
 });
-Route::apiResource('courses', CourseController::class);
+
 
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
