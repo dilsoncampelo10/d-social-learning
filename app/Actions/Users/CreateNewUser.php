@@ -2,6 +2,7 @@
 
 namespace App\Actions\Users;
 
+use App\Jobs\WelcomeMailJob;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,6 +15,8 @@ class CreateNewUser
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        WelcomeMailJob::dispatch($user);
 
         return $user;
     }
